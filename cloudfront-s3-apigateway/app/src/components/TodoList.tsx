@@ -1,12 +1,11 @@
-import { Todo } from "src/models/todo";
 import TodoItem from "src/components/TodoItem";
+import { useListTodos } from "src/usecases/useListTodos";
 
 const TodoList = () => {
-  const todos: Todo[] = [
-    { id: "id001", title: "Todo 001", completed: false },
-    { id: "id002", title: "Todo 002", completed: true },
-    { id: "id003", title: "Todo 003", completed: true },
-  ];
+  const { todos, isLoading, error } = useListTodos();
+
+  if (isLoading) <div>isLoading</div>;
+  if (error) <div>something is wrong</div>;
 
   return (
     <div className=''>

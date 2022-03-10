@@ -1,6 +1,10 @@
 import { Stack, StackProps, RemovalPolicy, Duration } from "aws-cdk-lib";
 import { NodejsFunction } from "aws-cdk-lib/aws-lambda-nodejs";
-import { HttpApi, HttpMethod } from "@aws-cdk/aws-apigatewayv2-alpha";
+import {
+  CorsHttpMethod,
+  HttpApi,
+  HttpMethod,
+} from "@aws-cdk/aws-apigatewayv2-alpha";
 import { HttpLambdaIntegration } from "@aws-cdk/aws-apigatewayv2-integrations-alpha";
 import { Bucket } from "aws-cdk-lib/aws-s3";
 import {
@@ -22,7 +26,13 @@ export class CloudfrontS3ApigatewayStack extends Stack {
     });
 
     // HTTP API Gateway
-    const todoHttpApi = new HttpApi(this, "cf-s3-api");
+    const todoHttpApi = new HttpApi(this, "cf-s3-api", {
+      corsPreflight: {
+        allowHeaders: ["Content-Type"],
+        allowMethods: [CorsHttpMethod.OPTIONS, CorsHttpMethod.GET],
+        allowOrigins: ["http://localhost:3000"],
+      },
+    });
 
     // Lambda Integration
     const listTodosIntegration = new HttpLambdaIntegration(
