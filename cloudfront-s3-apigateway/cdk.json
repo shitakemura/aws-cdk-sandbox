@@ -1,5 +1,5 @@
 {
-  "app": "npx ts-node --prefer-ts-exts bin/cloutfront-s3-apigateway.ts",
+  "app": "npx ts-node --prefer-ts-exts bin/cloudfront-s3-apigateway.ts",
   "watch": {
     "include": [
       "**"

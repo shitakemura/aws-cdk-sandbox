@@ -1,8 +1,8 @@
 {
-  "name": "cloutfront-s3-apigateway",
+  "name": "cloudfront-s3-apigateway",
   "version": "0.1.0",
   "bin": {
-    "cloutfront-s3-apigateway": "bin/cloutfront-s3-apigateway.js"
+    "cloudfront-s3-apigateway": "bin/cloudfront-s3-apigateway.js"
   },
   "scripts": {
     "build": "tsc",

@@ -8,3 +8,7 @@ node_modules
 cdk.out
 
 api-test.rest
+
+# Tailwind
+!postcss.config.js
+!tailwind.config.js

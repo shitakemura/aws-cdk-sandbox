@@ -11,7 +11,7 @@ import {
 import { Construct } from "constructs";
 import * as path from "path";
 
-export class CloutfrontS3ApigatewayStack extends Stack {
+export class CloudfrontS3ApigatewayStack extends Stack {
   constructor(scope: Construct, id: string, props?: StackProps) {
     super(scope, id, props);
 
