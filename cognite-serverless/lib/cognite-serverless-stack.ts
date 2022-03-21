@@ -52,18 +52,22 @@ export class CogniteServerlessStack extends Stack {
       removalPolicy: RemovalPolicy.DESTROY,
     });
 
-    userPool.addClient("cognito-serverless-userpool-client", {
-      authFlows: {
-        adminUserPassword: true,
-        userSrp: true,
-      },
-      supportedIdentityProviders: [UserPoolClientIdentityProvider.COGNITO],
-    });
+    const userPoolClient = userPool.addClient(
+      "cognito-serverless-userpool-client",
+      {
+        authFlows: {
+          adminUserPassword: true,
+          userSrp: true,
+        },
+        supportedIdentityProviders: [UserPoolClientIdentityProvider.COGNITO],
+      }
+    );
 
     // Authorizer
     const authorizer = new HttpUserPoolAuthorizer(
       "cognito-serverless-authorizer",
-      userPool
+      userPool,
+      { userPoolClients: [userPoolClient] }
     );
 
     // Http Lambda Integration
