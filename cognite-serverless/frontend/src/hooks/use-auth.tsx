@@ -1,5 +1,5 @@
 import React, { createContext, useContext, useEffect, useState } from 'react'
-import { Amplify, Auth } from 'aws-amplify'
+import Amplify, { Auth } from 'aws-amplify'
 import AwsConfigAuth from '../aws-config/auth'
 
 Amplify.configure({ Auth: AwsConfigAuth })
@@ -34,7 +34,8 @@ const useProvideAuth = (): UseAuth => {
         setUsername(result.username)
         setIsAuthenticated(true)
       })
-      .catch(() => {
+      .catch((error) => {
+        console.log(`error: ${JSON.stringify(error)}`)
         setUsername('')
         setIsAuthenticated(false)
       })
