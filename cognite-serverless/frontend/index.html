@@ -9,13 +9,14 @@
   <body>
     <div id="root"></div>
     <script type="module" src="/src/main.tsx"></script>
+    <!-- https://ui.docs.amplify.aws/getting-started/installation?platform=react#vite -->
+    <!-- ↑ it still doesn't work... -->
     <script>
-      var global = global || window
-      var Buffer = Buffer || []
-      var process = process || {
+      window.global = window
+      window.process = {
         env: { DEBUG: undefined },
-        version: [],
       }
+      var exports = {}
     </script>
   </body>
 </html>
