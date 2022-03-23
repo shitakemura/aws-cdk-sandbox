@@ -25,7 +25,7 @@ app.get('/todos', (_: Request, res: Response) => {
   res.status(200).send(JSON.stringify(todos));
 });
 
-app.get('/todos/id', (req: Request, res: Response) => {
+app.get('/todos/:id', (req: Request, res: Response) => {
   const id = Number(req.params['id']);
   res.status(200).send(JSON.stringify(todos[id]));
 });
