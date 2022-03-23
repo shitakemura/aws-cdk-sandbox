@@ -1,8 +1,7 @@
 import { CfnOutput, Stack, StackProps } from 'aws-cdk-lib';
 import { Construct } from 'constructs';
 import { NodejsFunction } from 'aws-cdk-lib/aws-lambda-nodejs';
-import { CorsHttpMethod, HttpApi } from '@aws-cdk/aws-apigatewayv2-alpha';
-import { HttpLambdaIntegration } from '@aws-cdk/aws-apigatewayv2-integrations-alpha';
+import { Cors, RestApi, LambdaIntegration } from 'aws-cdk-lib/aws-apigateway';
 import * as path from 'path';
 
 export class AwsServerlessExpressStack extends Stack {
@@ -15,29 +14,21 @@ export class AwsServerlessExpressStack extends Stack {
       handler: 'handler',
     });
 
-    // HTTP API Gateway
-    const serverlessLambdaApi = new HttpApi(this, 'serverless-lambda-api', {
-      corsPreflight: {
-        allowMethods: [CorsHttpMethod.OPTIONS, CorsHttpMethod.GET],
-        allowOrigins: ['http://localhost:3000'],
+    // REST API Gateway
+    const serverlessLambdaApi = new RestApi(this, 'serverlessLambdaApi', {
+      defaultCorsPreflightOptions: {
+        allowOrigins: Cors.ALL_ORIGINS,
+        allowMethods: Cors.ALL_METHODS,
+        allowHeaders: Cors.DEFAULT_HEADERS,
       },
     });
 
     // HTTP Lambda Integration
-    const serverlessLambdaIntegration = new HttpLambdaIntegration(
-      'serverless-lambda-integration',
-      serverlessLambda
-    );
+    const serverlessLambdaIntegration = new LambdaIntegration(serverlessLambda);
 
     // API Routes
-    serverlessLambdaApi.addRoutes({
-      path: '/{proxy+}',
-      integration: serverlessLambdaIntegration,
-    });
-
-    // CfnOutput
-    new CfnOutput(this, 'api endpoint', {
-      value: serverlessLambdaApi.apiEndpoint,
-    });
+    serverlessLambdaApi.root
+      .addResource('{proxy+}')
+      .addMethod('ANY', serverlessLambdaIntegration);
   }
 }

@@ -21,7 +21,7 @@ const todos: Todo[] = [
   { id: 4, title: 'Todo 004', completed: true },
 ];
 
-app.get('todos', (_: Request, res: Response) => {
+app.get('/todos', (_: Request, res: Response) => {
   res.status(200).send(JSON.stringify(todos));
 });
 
