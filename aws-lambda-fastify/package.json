@@ -1,0 +1,25 @@
+{
+  "name": "next-fastify-todo-app",
+  "version": "1.0.0",
+  "license": "UNLICENCED",
+  "private": true,
+  "workspaces": {
+    "packages": [
+      "packages/*"
+    ],
+    "nohoist": [
+      "**/jest",
+      "**/jest/**"
+    ]
+  },
+  "scripts": {
+    "frontend:dev": "yarn workspace frontend dev",
+    "frontend:test": "yarn workspace frontend test",
+    "backend:dev": "yarn workspace backend dev",
+    "infra:test": "yarn workspace infrastructure test",
+    "infra:synth": "yarn workspace infrastructure cdk synth",
+    "infra:diff": "yarn workspace infrastructure cdk diff",
+    "infra:deploy": "yarn workspace infrastructure cdk deploy",
+    "infra:destroy": "yarn workspace infrastructure cdk destroy"
+  }
+}
