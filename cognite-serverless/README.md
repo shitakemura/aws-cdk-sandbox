@@ -4,7 +4,7 @@ https://bobbyhadz.com/blog/aws-cdk-cognito-user-pool-example
 
 ## Cognito test
 
-- session 取得
+#### session 取得
   aws cognito-idp admin-initiate-auth \
    --user-pool-id 'User Pool Id' \
    --client-id 'App Client Id' \
@@ -12,7 +12,7 @@ https://bobbyhadz.com/blog/aws-cdk-cognito-user-pool-example
    --auth-parameters USERNAME='user name',PASSWORD='password' \
    --region ap-northeast-1
 
-- password 更新して access token 取得
+#### password 更新して access token 取得
   aws cognito-idp admin-respond-to-auth-challenge \
   --user-pool-id 'User Pool Id' \
   --client-id 'App Client Id' \
@@ -20,6 +20,6 @@ https://bobbyhadz.com/blog/aws-cdk-cognito-user-pool-example
   --challenge-responses NEW_PASSWORD='new password',USERNAME='use name',userAttributes.email='use name' \
   --session "↑ で取得した session"
 
-- GET リクエスト
+#### GET リクエスト
   GET http://api-endpoint/todos
   Authorization: 取得した accessToken
