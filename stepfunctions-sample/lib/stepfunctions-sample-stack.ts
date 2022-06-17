@@ -4,6 +4,5 @@ import { Construct } from 'constructs';
 export class StepfunctionsSampleStack extends Stack {
   constructor(scope: Construct, id: string, props?: StackProps) {
     super(scope, id, props);
-
   }
 }
