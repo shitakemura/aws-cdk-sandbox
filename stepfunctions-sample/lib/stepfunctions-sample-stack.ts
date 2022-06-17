@@ -1,6 +1,11 @@
-import { Stack, StackProps } from 'aws-cdk-lib';
+import { Duration, Stack, StackProps } from 'aws-cdk-lib';
 import { Code, Function, Runtime } from 'aws-cdk-lib/aws-lambda';
-import { StateMachine } from 'aws-cdk-lib/aws-stepfunctions';
+import {
+  Parallel,
+  StateMachine,
+  Wait,
+  WaitTime,
+} from 'aws-cdk-lib/aws-stepfunctions';
 import { LambdaInvoke } from 'aws-cdk-lib/aws-stepfunctions-tasks';
 import { Construct } from 'constructs';
 
@@ -24,7 +29,14 @@ export class StepfunctionsSampleStack extends Stack {
       lambdaFunction: taskFn,
     });
 
-    const definition = firstState.next(secondState);
+    const wait10 = new Wait(this, '10秒待つ', {
+      time: WaitTime.duration(Duration.minutes(10)),
+    });
+
+    const parallel = new Parallel(this, 'Parallel');
+    parallel.branch(firstState, secondState).next(wait10);
+
+    const definition = parallel;
 
     new StateMachine(this, 'stateMachine', {
       definition: definition,
